@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import browser from './browser_config';
+import browser from "./browser_config";
 import axios from "axios";
-import FileUploader from './FileUploader';
+import FileUploader from "./FileUploader";
 
 /*
 This code is part of the CGIMP distribution
@@ -25,18 +25,18 @@ CONTACT: Adam Diehl, adadiehl@umich.edu
 class IntersectUserData extends Component {
     constructor(props) {
         super(props);
-	this.state = {
+        this.state = {
             files: [],
-	    working: false
+            working: false
         };
-	this.handleFilesChange = this.handleFilesChange.bind(this);
-	this.intersectData = this.intersectData.bind(this);
+        this.handleFilesChange = this.handleFilesChange.bind(this);
+        this.intersectData = this.intersectData.bind(this);
     }
-    
+
     componentWillUnmount() {
         // Clean up our area.
         // This is probably where we need to put function call to delete user datafile(s).
-	// However, this currently isn't working because unmount events don't appear to be triggered.
+        // However, this currently isn't working because unmount events don't appear to be triggered.
         /*this.state.files.forEach(function (file) {
             console.log(file);
             axios.delete(browser.apiAddr + '/delete',
@@ -45,72 +45,85 @@ class IntersectUserData extends Component {
         });*/
     }
 
-    handleFilesChange = (fileItems) => {
+    handleFilesChange = fileItems => {
         const files = [];
         fileItems.map(fileItem => files.push(fileItem));
-        this.setState({ files: files,
-			bedtoolsOptions: {} });
-	if (!this.state.files.length) {
-	    this.props.onDataChange(null);
-	}
-    }
+        this.setState({ files: files, bedtoolsOptions: {} });
+        if (!this.state.files.length) {
+            this.props.onDataChange(null);
+        }
+    };
 
     // Convert locus-level data to node-level data for map display.
-    convertToNodeData = (data) => {
-	const nodeData = {}
-	Object.keys(data).forEach( (key) => {
-	    let node = data[key].node
-	    if (node in nodeData) {
-		nodeData[node]++;
-	    } else {
-		nodeData[node] = 1;
-	    }
-	});
-	//console.log(nodeData);
-	return nodeData;
-    }
-    
+    convertToNodeData = data => {
+        const nodeData = {};
+        Object.keys(data).forEach(key => {
+            let node = data[key].node;
+            if (node in nodeData) {
+                nodeData[node]++;
+            } else {
+                nodeData[node] = 1;
+            }
+        });
+        //console.log(nodeData);
+        return nodeData;
+    };
+
     // This is where we call pybedtools to do the intersection.
-    intersectData = (event) => {
-	//console.log(event);
-	this.props.updateParentState("dataIsLoaded", false)
-	this.setState({ working: true });
-	// Since there should only be one file in the filepond,
-	// we will assume files[0] is the desired user file.
-	//console.log(this.state.files[0].filename);
-	axios.post(browser.apiAddr + "/intersectData",
-                   { serverId: this.state.files[0].serverId,
-		     filename: this.state.files[0].filename,
-                     data: JSON.stringify(this.props.data),
-                     bedtoolsOptions: this.state.bedtoolsOptions }
-                  )
+    intersectData = event => {
+        //console.log(event);
+        this.props.updateParentState("dataIsLoaded", false);
+        this.setState({ working: true });
+        // Since there should only be one file in the filepond,
+        // we will assume files[0] is the desired user file.
+        //console.log(this.state.files[0].filename);
+        axios
+            .post(browser.apiAddr + "/intersectData", {
+                serverId: this.state.files[0].serverId,
+                filename: this.state.files[0].filename,
+                data: JSON.stringify(this.props.data),
+                bedtoolsOptions: this.state.bedtoolsOptions
+            })
             .then(res => {
-		const intersectingData = JSON.parse(res.data[0]);
-		this.props.onMapDataChange(this.convertToNodeData(intersectingData));
-		this.props.onDataChange(intersectingData);
-		this.setState({ working: false });
-		this.props.updateParentState("dataIsLoaded", true);
+                const intersectingData = JSON.parse(res.data[0]);
+                this.props.onMapDataChange(
+                    this.convertToNodeData(intersectingData)
+                );
+                this.props.onDataChange(intersectingData);
+                this.setState({ working: false });
+                this.props.updateParentState("dataIsLoaded", true);
             })
             .catch(error => {
                 console.log(error.response);
-		// Handle the error
+                // Handle the error
             });
-	event.preventDefault();
-    }
-    
-    render () {
+        event.preventDefault();
+    };
+
+    render() {
         return (
             <div>
                 Upload BED data to Intersect:
-                <FileUploader onFilesChange={this.handleFilesChange} files={this.state.files}/>
-	        <form onSubmit={this.intersectData}>
-		{this.state.working ? <div>Working...</div> : <div/>}
-		<input type="submit" value="Intersect" disabled={!(this.state.files.length && this.props.dataIsLoaded)}/>
-	        </form>
-	    </div>
+                <FileUploader
+                    onFilesChange={this.handleFilesChange}
+                    files={this.state.files}
+                />
+                <form onSubmit={this.intersectData}>
+                    {this.state.working ? <div>Working...</div> : <div />}
+                    <input
+                        type="submit"
+                        value="Intersect"
+                        disabled={
+                            !(
+                                this.state.files.length &&
+                                this.props.dataIsLoaded
+                            )
+                        }
+                    />
+                </form>
+            </div>
         );
     }
 }
-
 
 export default IntersectUserData;

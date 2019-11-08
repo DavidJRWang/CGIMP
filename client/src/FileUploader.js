@@ -1,8 +1,8 @@
 import React from "react";
 import axios from "axios";
-import { FilePond } from 'react-filepond';
-import 'filepond/dist/filepond.min.css';
-import browser from './browser_config';
+import { FilePond } from "react-filepond";
+import "filepond/dist/filepond.min.css";
+import browser from "./browser_config";
 
 /*
 This code is part of the CGIMP distribution
@@ -24,23 +24,23 @@ CONTACT: Adam Diehl, adadiehl@umich.edu
 */
 
 const FileUploader = ({ onFilesChange, files }) => (
-        <FilePond
-            ref={ref => this.pond = ref}
-            files={files}
-            server={{
-		url: browser.apiAddr,
-	        process: "/upload",
-                revert: (serverId, load, error) => {
-                    axios.delete(browser.apiAddr + '/delete',
-                        {params: { serverId: serverId }}
-                    );
-                    load();
-                }
-            }}
-            onupdatefiles = { (fileItems) => {
-		onFilesChange(fileItems)
-            }}
-        />
+    <FilePond
+        ref={ref => (this.pond = ref)}
+        files={files}
+        server={{
+            url: browser.apiAddr,
+            process: "/upload",
+            revert: (serverId, load, error) => {
+                axios.delete(browser.apiAddr + "/delete", {
+                    params: { serverId: serverId }
+                });
+                load();
+            }
+        }}
+        onupdatefiles={fileItems => {
+            onFilesChange(fileItems);
+        }}
+    />
 );
 
 export default FileUploader;

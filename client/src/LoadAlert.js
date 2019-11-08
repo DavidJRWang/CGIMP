@@ -1,8 +1,8 @@
-import React from 'react';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import React from "react";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 /*
 This code is part of the CGIMP distribution
@@ -32,23 +32,23 @@ CONTACT: Adam Diehl, adadiehl@umich.edu
 //const classes = useStyles();
 
 class LoadAlertDialog extends React.Component {
-    render () {
-	return (
-	    <div>
-		<Dialog
+    render() {
+        return (
+            <div>
+                <Dialog
                     open={this.props.open}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description"
-	        >
+                >
                     <DialogTitle id="alert-dialog-title">
-		        {"Working..."}
-	            </DialogTitle>
+                        {"Working..."}
+                    </DialogTitle>
                     <DialogContent>
-		        <CircularProgress />
+                        <CircularProgress />
                     </DialogContent>
-	        </Dialog>
-	    </div>
-	);
+                </Dialog>
+            </div>
+        );
     }
 }
 

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import FacetedSearch from './Facets';
-import IntersectUserData from './IntersectUserData';
+import FacetedSearch from "./Facets";
+import IntersectUserData from "./IntersectUserData";
 
 /*
 This code is part of the CGIMP distribution
@@ -21,27 +21,25 @@ GNU General Public License for more details.
 CONTACT: Adam Diehl, adadiehl@umich.edu
 */
 
-
 class MapControls extends Component {
     render() {
         return (
-		<div>
-		<FacetedSearch
-	            onDataChange={this.props.onDataChange}
-	            onMapDataChange={this.props.onMapDataChange}
-	            onNewSearchAction={this.props.onNewSearchAction}
-	            updateParentState={this.props.updateParentState}
-		/>
-		<IntersectUserData
-	            data={this.props.displayedData}
-	            onDataChange={this.props.onDataChange}
-	            onMapDataChange={this.props.onMapDataChange}
-	            onNewSearchAction={this.props.onNewSearchAction}
-	            dataIsLoaded={this.props.dataIsLoaded}
-	            updateParentState={this.props.updateParentState}
-		/>
-		
-		</div>
+            <div>
+                <FacetedSearch
+                    onDataChange={this.props.onDataChange}
+                    onMapDataChange={this.props.onMapDataChange}
+                    onNewSearchAction={this.props.onNewSearchAction}
+                    updateParentState={this.props.updateParentState}
+                />
+                <IntersectUserData
+                    data={this.props.displayedData}
+                    onDataChange={this.props.onDataChange}
+                    onMapDataChange={this.props.onMapDataChange}
+                    onNewSearchAction={this.props.onNewSearchAction}
+                    dataIsLoaded={this.props.dataIsLoaded}
+                    updateParentState={this.props.updateParentState}
+                />
+            </div>
         );
     }
 }
