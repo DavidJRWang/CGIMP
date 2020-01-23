@@ -208,8 +208,11 @@ class FacetedSearch extends Component {
             //console.log("Fetching aggregate results for query:", next);
             const initialResults = await this.fetchResults(next, url);
             const allResults = {};
+            // initialResults.aggregations.nodes.buckets.forEach(hit => {
+            //     allResults[hit.key] = hit.doc_count;
+            // });
             initialResults.aggregations.nodes.buckets.forEach(hit => {
-                allResults[hit.key] = hit.doc_count;
+                allResults[hit.key] = hit.avg_orth_types.value;
             });
             this.props.onMapDataChange(allResults);
             this.getAllDisplayedData(prev, next);
@@ -252,12 +255,19 @@ class FacetedSearch extends Component {
                             componentId="resultsList"
                             dataField="id"
                             defaultQuery={() => ({
-                                size: 1,
+                                size: 0,
                                 aggs: {
                                     nodes: {
                                         terms: {
                                             field: "node",
                                             size: 100000
+                                        }
+                                    },
+                                    aggs: {
+                                        avg_orth_types: {
+                                            avg: {
+                                                field: "orth_type"
+                                            }
                                         }
                                     }
                                 }

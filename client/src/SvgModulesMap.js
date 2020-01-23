@@ -397,6 +397,8 @@ class SvgModuleMap extends Component {
     }
 }
 
+// Download buttons in bottom right of map display
+// Different options for download format
 class Downloader extends Component {
     downloadSvg = () => {
         const xml = new XMLSerializer().serializeToString(this.props.dataMap);
@@ -427,6 +429,8 @@ class Downloader extends Component {
     }
 }
 
+// Display options in bottom left of map display
+// Radio buttons/checkboxes for what to display
 class DisplayConfig extends Component {
     constructor(props) {
         super(props);
