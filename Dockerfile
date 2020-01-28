@@ -27,8 +27,8 @@ RUN curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/dow
     && rm /usr/local/bin/gosu.asc \
     && chmod +x /usr/local/bin/gosu
 
-#COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-#ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 # We need to install conda and pybedtools packages to enable on-the-fly intersections.
 RUN apt-get update && apt-get -y --no-install-recommends install bedtools python-setuptools python-dev build-essential
