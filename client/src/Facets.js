@@ -261,15 +261,15 @@ class FacetedSearch extends Component {
                                         terms: {
                                             field: "node",
                                             size: 100000
-                                        }
-                                    },
-                                    aggs: {
-                                        avg_orth_types: {
-                                            avg: {
-                                                field: "orth_type"
+                                        },
+                                        aggs: {
+                                            avg_orth_types: {
+                                                avg: {
+                                                    field: "orth_type"
+                                                }
                                             }
                                         }
-                                    }
+                                    }   
                                 }
                             })}
                             react={{
