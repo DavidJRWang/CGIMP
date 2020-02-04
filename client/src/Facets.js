@@ -211,7 +211,7 @@ class FacetedSearch extends Component {
             // initialResults.aggregations.nodes.buckets.forEach(hit => {
             //     allResults[hit.key] = hit.doc_count;
             // });
-            initialResults.aggregations.nodes.buckets.forEach(hit => {
+            initialResults.aggregations.nodes.buckets.aggregations.forEach(hit => {
                 allResults[hit.key] = hit.avg_orth_types.value;
             });
             this.props.onMapDataChange(allResults);
