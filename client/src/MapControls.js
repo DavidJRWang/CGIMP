@@ -30,6 +30,7 @@ class MapControls extends Component {
                     onMapDataChange={this.props.onMapDataChange}
                     onNewSearchAction={this.props.onNewSearchAction}
                     updateParentState={this.props.updateParentState}
+                    aggregation={this.props.aggregation}
                 />
                 <IntersectUserData
                     data={this.props.displayedData}

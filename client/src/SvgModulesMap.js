@@ -243,6 +243,7 @@ class SvgModuleMap extends Component {
 
     d3DrawGrid = () => {
         const moduleCounts = this.props.data;
+        console.log(moduleCounts);
         const nodeData = this.props.nodeData;
 
         const dim = this.props.config.dim;

@@ -204,16 +204,22 @@ class FacetedSearch extends Component {
     };
 
     handleQueryChange = async (prev, next) => {
+        // this.props.aggregation
         if (next && !next.query.match_all) {
             //console.log("Fetching aggregate results for query:", next);
             const initialResults = await this.fetchResults(next, url);
             const allResults = {};
-            // initialResults.aggregations.nodes.buckets.forEach(hit => {
-            //     allResults[hit.key] = hit.doc_count;
-            // });
-            initialResults.aggregations.nodes.buckets.aggregations.forEach(hit => {
-                allResults[hit.key] = hit.avg_orth_types.value;
-            });
+            if (this.props.aggregation == "nodes") {
+                initialResults.aggregations.nodes.buckets.forEach(hit => {
+                    allResults[hit.key] = hit.doc_count;
+                });
+            }
+            else if (this.props.aggregation == "avg_orth_types") {
+                initialResults.aggregations.nodes.buckets.forEach(hit => {
+                    allResults[hit.key] = hit.avg_orth_types.value;
+                });
+            }
+            console.log(allResults);
             this.props.onMapDataChange(allResults);
             this.getAllDisplayedData(prev, next);
         }
