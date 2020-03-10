@@ -54,7 +54,8 @@ class App extends Component {
             nodeFields: null, // List of fields in node documents.
             mapChangeFlag: 0, // Direct observable to flag map changes.
             dataChangeFlag: 0, // Direct observable to flag data changes.
-            aggregation: "nodes",
+            aggregations: ["nodes", "avg_orth_types"],
+            currentAggregation: "nodes",
             mapConfig: {
                 dim: browser.mapDim, // Map dimensions: [nCols, nRows]
                 toolTips: [
@@ -508,7 +509,8 @@ class App extends Component {
                                 }
                                 dataIsLoaded={this.state.dataIsLoaded}
                                 updateParentState={this.updateStateSettings}
-                                aggregation={this.state.aggregation}
+                                aggregations={this.state.aggregations}
+                                currentAggregation={this.state.currentAggregation}
                             />
                         ) : (
                             <div></div>
@@ -525,7 +527,9 @@ class App extends Component {
                                 onMapChange={this.handleMapChange}
                                 onDataDownload={this.handleDataDownload}
                                 changeFlag={this.state.mapChangeFlag}
-                                aggreagtion={this.state.aggregation}
+                                aggregations={this.state.aggregations}
+                                currentAggregation={this.state.currentAggregation}
+                                updateParentState={this.updateStateSettings}
                             />
                         ) : (
                             <span>Loading Data...</span>

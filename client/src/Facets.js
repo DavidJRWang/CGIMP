@@ -204,7 +204,6 @@ class FacetedSearch extends Component {
     };
 
     handleQueryChange = async (prev, next) => {
-        // this.props.aggregation
         if (next && !next.query.match_all) {
             //console.log("Fetching aggregate results for query:", next);
             const initialResults = await this.fetchResults(next, url);

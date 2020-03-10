@@ -384,6 +384,9 @@ class SvgModuleMap extends Component {
                         <DisplayConfig
                             onDisplayTypeChange={this.handleDisplayTypeChange}
                             onLogSelect={this.handleLogSelect}
+                            aggregations={this.props.aggregations}
+                            currentAggregation={this.props.aggregations}
+                            updateParentState={this.props.updateParentState}
                         />
                     </View>
                     <View style={{ width: "50%", alignItems: "flex-end" }}>
@@ -459,6 +462,22 @@ class DisplayConfig extends Component {
         });
     };
 
+    aggregations_list = [
+        {
+            value: 'nodes',
+            label: 'nodes',
+        },
+        {
+            value: 'avg_orth_types',
+            label: 'average orth types',
+        },
+    ];
+
+    handleChange = name => event => {
+        // this.setState({ [name]: event.target.value });
+        this.props.updateParentState(name, event.target.value);
+    };
+
     render() {
         return (
             <div>
@@ -490,6 +509,25 @@ class DisplayConfig extends Component {
                             onChange={this.handleLogTransformClick}
                         />
                         Log2 Transform
+                    </label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <label>
+                        <TextField
+                            id={"aggregationSelect"}
+                            select
+                            label="Aggregation"
+                            value={this.props.currentAggregation}
+                            onChange={this.handleChange("currentAggregation")}
+                            SelectProps={{
+                                native: true,
+                            }}                    
+                        >
+                            {aggregations.map(option => (
+                                <option key={this.aggregations_list.value} value={this.aggregations_list.value}>
+                                    {this.aggregations_list.label}
+                                </option>
+                            ))}
+                        </TextField>
                     </label>
                 </form>
             </div>
