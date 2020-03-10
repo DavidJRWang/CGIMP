@@ -4,6 +4,7 @@ import "./index.css";
 import * as d3 from "d3";
 import { isDict, average, round } from "./HelperFunctions";
 import { View } from "react-native";
+import TextField from "@material-ui/core/TextField";
 
 /*
 This code is part of the CGIMP distribution
@@ -522,7 +523,7 @@ class DisplayConfig extends Component {
                                 native: true,
                             }}                    
                         >
-                            {aggregations.map(option => (
+                            {aggregations_list.map(option => (
                                 <option key={this.aggregations_list.value} value={this.aggregations_list.value}>
                                     {this.aggregations_list.label}
                                 </option>
