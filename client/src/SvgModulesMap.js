@@ -463,23 +463,23 @@ class DisplayConfig extends Component {
         });
     };
 
-    aggregations_list = [
-        {
-            value: 'nodes',
-            label: 'nodes',
-        },
-        {
-            value: 'avg_orth_types',
-            label: 'average orth types',
-        },
-    ];
-
     handleChange = name => event => {
         // this.setState({ [name]: event.target.value });
         this.props.updateParentState(name, event.target.value);
     };
 
     render() {
+        const aggregations_list = [
+            {
+                value: 'nodes',
+                label: 'nodes',
+            },
+            {
+                value: 'avg_orth_types',
+                label: 'average orth types',
+            },
+        ];
+
         return (
             <div>
                 <form>
@@ -524,8 +524,8 @@ class DisplayConfig extends Component {
                             }}                    
                         >
                             {aggregations_list.map(option => (
-                                <option key={this.aggregations_list.value} value={this.aggregations_list.value}>
-                                    {this.aggregations_list.label}
+                                <option key={aggregations_list.value} value={aggregations_list.value}>
+                                    {aggregations_list.label}
                                 </option>
                             ))}
                         </TextField>
