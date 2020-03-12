@@ -487,7 +487,8 @@ class App extends Component {
                 }
             );
         } else {
-            this.setState({ [name]: value });
+            this.setState({ [name]: value },
+                () => {console.log(this.state[name])});
         }
     };
 

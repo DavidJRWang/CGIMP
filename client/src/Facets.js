@@ -56,6 +56,10 @@ class FacetedSearch extends Component {
         this.getFacetsFromElasticsearch();
     }
 
+    // shouldComponentUpdate(nextProps, nextState) {
+    //     return (nextProps.currentAggregation !== this.props.currentAggregation);
+    // }
+
     getFacetsFromElasticsearch = () => {
         const facets = [];
         client.get({ index: "browser", type: "modules", id: 1 }, (err, res) => {
@@ -208,17 +212,17 @@ class FacetedSearch extends Component {
             //console.log("Fetching aggregate results for query:", next);
             const initialResults = await this.fetchResults(next, url);
             const allResults = {};
-            if (this.props.aggregation == "nodes") {
+            if (this.props.currentAggregation === "nodes") {
                 initialResults.aggregations.nodes.buckets.forEach(hit => {
                     allResults[hit.key] = hit.doc_count;
                 });
             }
-            else if (this.props.aggregation == "avg_orth_types") {
+            else if (this.props.currentAggregation === "avg_orth_types") {
                 initialResults.aggregations.nodes.buckets.forEach(hit => {
                     allResults[hit.key] = hit.avg_orth_types.value;
                 });
             }
-            console.log(allResults);
+            // console.log(allResults);
             this.props.onMapDataChange(allResults);
             this.getAllDisplayedData(prev, next);
         }

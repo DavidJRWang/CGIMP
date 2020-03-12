@@ -244,7 +244,6 @@ class SvgModuleMap extends Component {
 
     d3DrawGrid = () => {
         const moduleCounts = this.props.data;
-        console.log(moduleCounts);
         const nodeData = this.props.nodeData;
 
         const dim = this.props.config.dim;
@@ -386,7 +385,7 @@ class SvgModuleMap extends Component {
                             onDisplayTypeChange={this.handleDisplayTypeChange}
                             onLogSelect={this.handleLogSelect}
                             aggregations={this.props.aggregations}
-                            currentAggregation={this.props.aggregations}
+                            currentAggregation={this.props.currentAggregation}
                             updateParentState={this.props.updateParentState}
                         />
                     </View>
@@ -441,8 +440,13 @@ class DisplayConfig extends Component {
         super(props);
         this.state = {
             selectedOption: "Count",
-            logTransform: false
+            logTransform: false,
+            currentAggregation: "nodes"
         };
+    }
+
+    componentDidMount() {
+        this.setState({ currentAggregation: this.props.currentAggregation});
     }
 
     handleDisplayTypeChange = event => {
@@ -464,7 +468,7 @@ class DisplayConfig extends Component {
     };
 
     handleChange = name => event => {
-        // this.setState({ [name]: event.target.value });
+        this.setState({ [name]: event.target.value });
         this.props.updateParentState(name, event.target.value);
     };
 
@@ -517,15 +521,15 @@ class DisplayConfig extends Component {
                             id={"aggregationSelect"}
                             select
                             label="Aggregation"
-                            value={this.props.currentAggregation}
+                            value={this.state.currentAggregation}
                             onChange={this.handleChange("currentAggregation")}
                             SelectProps={{
                                 native: true,
                             }}                    
                         >
                             {aggregations_list.map(option => (
-                                <option key={aggregations_list.value} value={aggregations_list.value}>
-                                    {aggregations_list.label}
+                                <option key={option.value} value={option.value}>
+                                    {option.label}
                                 </option>
                             ))}
                         </TextField>
